@@ -1,0 +1,19 @@
+
+.row {
+    height: 60px;
+    display: flex;
+}
+
+.box {
+    width: 60px;
+    border: 1px solid black;
+}
+
+.box:hover {
+    background-color: beige;
+}
+
+#board {
+    display: flex;
+    flex-direction: column;
+}
