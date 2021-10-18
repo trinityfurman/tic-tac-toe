@@ -1,4 +1,11 @@
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
 .row {
     height: 60px;
     display: flex;
@@ -16,4 +23,9 @@
 #board {
     display: flex;
     flex-direction: column;
+}
+
+#players {
+    display: flex;
+    gap: 100px;
 }
