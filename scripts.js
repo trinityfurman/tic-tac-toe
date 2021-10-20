@@ -1,5 +1,7 @@
-//Todo: add event listener to each 'box' for on click, to signify when player clicks
-// Create array for each square in gameboard
+
+// Todo: ensure players can't add marker after game is won 
+// Add button to start/restart game
+// Update interface
 const gameBoard = (function() {
  
     // Create array with three rows
@@ -25,8 +27,6 @@ const gameBoard = (function() {
             const board = document.querySelector('#board');
             board.appendChild(row);
         }
-        // Add event listeners to each div. pass the event listener to controller function
-
     };
 
     return {
@@ -50,15 +50,19 @@ const Player = (name) => {
 
 const displayController = (function() {
 
-    // set a property that states whose turn it is
-    // alternate turns in for loop until someone wins or it is a tie
-
     let turnNum = 0;
     const thisArray = gameBoard.boardArray();
 
-    const boxClick = (e) => {
-        //console.log(e.target.dataset.number);
+    let playerOne = Player('first');
+    let playerTwo = Player('second');
 
+    //let playerOne = "";
+    //let playerTwo = "";
+
+
+    const boxClick = (e) => {
+
+ 
         // Log which box is being clicked on based on the data-number attribute
         const box = e.target.dataset.number;
 
@@ -74,8 +78,6 @@ const displayController = (function() {
                 thisArray[box] = "x";
                 currBox.textContent = 'x';
                 turnNum++;
-                console.log(playerOne);
-                console.log(playerTwo);
                 checkStatus();
             } else {
                 thisArray[box] = 'o';
@@ -84,11 +86,6 @@ const displayController = (function() {
                 checkStatus();
             }
         } 
-
-        //check if box has already been clicked by array value is empty
-        //let box = e.target.dataset.index;
-        //if not, increase turn num!
-        // then in check status, see if turn num is 9, which means game over (tie)
     };
 
     const checkStatus = () => {
@@ -116,7 +113,6 @@ const displayController = (function() {
         } else {
             currentPlayer.current = false;
             otherPlayer.current = true;
-            console.log(otherPlayer);
             // do feature where player's name lights up to signify turn?
         }
     }; 
@@ -147,14 +143,55 @@ const displayController = (function() {
     }; 
 
     // When game is over, display winner and reset
-    const endGame = () => {
+    const startGame = (event) => {
 
+        event.preventDefault();
+
+        // Prevent empty form from being submitted
+        if (document.getElementById('nameOne').value == "" || document.getElementById('nameTwo').value == "") {
+            alert("Please fill out every field.");
+        } else {
+
+            // Create new book object based on info from form
+            playerOne.name = `${document.getElementById('nameOne').value}`;
+            playerOne.current = true;
+            playerTwo.name = `${document.getElementById('nameTwo').value}`;
+  
+            const firstName = document.querySelector('#firstPlayer');
+            firstName.textContent = `${document.getElementById('nameOne').value}`;
+
+            const secondName = document.querySelector('#secondPlayer');
+            secondName.textContent = `${document.getElementById('nameTwo').value}`;
+    
+            // Add new book to library array and create table
+            hidePopup();
+
+            // Reset form
+            const form = document.getElementById("form");
+            form.reset();
+
+            return [playerOne, playerTwo];
+
+        }
     };
 
+    // Display popup
+    const displayPopup = () => {
+        document.getElementById('formpopup').style.display = "block";
+        document.getElementById('modal').style.display = "block";
+    };
+
+    // Hide popup
+    const hidePopup = () => {
+        document.getElementById('formpopup').style.display = "none";
+        document.getElementById('modal').style.display = "none";
+    };
 
     return {
         boxClick,
         checkStatus,
+        startGame,
+        displayPopup,
     };
 
 })();
@@ -162,10 +199,12 @@ const displayController = (function() {
 
 gameBoard.createBoard();
 
-const playerOne = Player('TestPlayer');
-playerOne.current = true;
 
-const playerTwo = Player('SecondPlayer');
+
+//const playerOne = Player('TestPlayer');
+//playerOne.current = true;
+
+//const playerTwo = Player('SecondPlayer');
 
 
 

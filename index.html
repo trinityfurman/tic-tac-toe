@@ -9,11 +9,28 @@
 </head>
 <body>
     <div id='players'>
+        <button id='startButton' onclick="displayController.displayPopup()">Start New Game</button>
         <div id='firstPlayer'>Player One</div>
-        <div id='secondPlaer'>Player Two</div>
+        <div id='secondPlayer'>Player Two</div>
     </div>
     <div id='score'></div>
     <div id='board'></div>
+
+    <div id="modal">
+        <div id="formpopup">
+          <form id='form' method="post">
+              <div id="rightside">
+                  <label for="nameOne">Name of Player One:</label>
+                  <input type="text" id="nameOne" name="nameOne"><br>
+                  <label for="nameTwo">Name of Player Two:</label>
+                  <input type="text" id="nameTwo" name="nameTwo"><br>
+                  <input type="submit" value="Add" id="formSubmit" onclick="displayController.startGame(event)">
+              </div>
+              <div><button id="close">x</button></div>
+          </form>
+        </div>
+      </div>
+    
     <script src="scripts.js"></script>
 </body>
 </html>
