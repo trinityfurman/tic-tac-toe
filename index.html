@@ -5,13 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
     <title>Tic-tac-toe</title>
 </head>
 <body>
     <div id='players'>
-        <button id='startButton' onclick="displayController.displayPopup()">Start New Game</button>
-        <div id='firstPlayer'>Player One</div>
-        <div id='secondPlayer'>Player Two</div>
+        <button id='startButton' onclick="displayController.displayPopup()">New Game</button>
+        <div id='playersBox'>
+            <div id='firstPlayer'>Player One</div>
+            <div id='secondPlayer'>Player Two</div>
+        </div>
     </div>
     <div id='score'></div>
     <div id='board'></div>

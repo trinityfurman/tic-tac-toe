@@ -1,29 +1,28 @@
 
-// Todo: ensure players can't add marker after game is won 
-// Add button to start/restart game
-// Update interface
 const gameBoard = (function() {
  
-    // Create array with three rows
+    // Create array with nine blank values
     const boardArray = () => [ , , , , , , , , ];
 
-    // Create board connected to array?
+    // Create game board
     const createBoard = () => {
         let current = 0;
+        // Create three rows
         for (let i = 0; i < 3; i++) {
             const row = document.createElement('div');
             row.classList.add('row');
 
+            // Create three boxes in each row
             for (let j = 0; j < 3; j++) {
                 const div = document.createElement('div');
                 div.textContent = boardArray()[current];
                 div.classList.add('box');
                 div.setAttribute('data-number', current);
-                // Figure out what function to attach on click
                 div.addEventListener('click', displayController.boxClick);
                 row.appendChild(div);
                 current++;
             }
+            // Add each box to game board
             const board = document.querySelector('#board');
             board.appendChild(row);
         }
@@ -37,8 +36,7 @@ const gameBoard = (function() {
 })();
 
 const Player = (name) => {
- 
-    // set this to true or false depending on whose turn it is
+    // Set this to true or false depending on whose turn it is
     const current = false;
 
     return {
@@ -56,43 +54,42 @@ const displayController = (function() {
     let playerOne = Player('first');
     let playerTwo = Player('second');
 
-    //let playerOne = "";
-    //let playerTwo = "";
-
+    // Set this value depending on whether there is an active game
+    let play = false;
 
     const boxClick = (e) => {
 
- 
         // Log which box is being clicked on based on the data-number attribute
         const box = e.target.dataset.number;
-
-        //thisArray[box] = 'x';
-        //console.log(thisArray[box]);
-        // The below two lines WORK
         const currBox = document.querySelector(`[data-number='${box}']`);
-        //currBox.textContent = 'x';
 
-       //Check if chosen box is free
-       if (thisArray[box] == undefined) {
-            if (playerOne.current) {
-                thisArray[box] = "x";
-                currBox.textContent = 'x';
-                turnNum++;
-                checkStatus();
-            } else {
-                thisArray[box] = 'o';
-                currBox.textContent = 'o';
-                turnNum++;
-                checkStatus();
+       // If game is active & box is empty, allow player to make move
+       if (play == true) {
+            if (thisArray[box] == undefined) {
+                if (playerOne.current) {
+                    thisArray[box] = "x";
+                    currBox.style.color = '#71C8AE'; 
+                    currBox.textContent = 'x';
+                    turnNum++;
+                    checkStatus();
+                } else {
+                    thisArray[box] = 'o';
+                    currBox.style.color = '#D379C2';
+                    currBox.textContent = 'o';
+                    turnNum++;
+                    checkStatus();
+                }
             }
         } 
     };
 
+    // Check whether game has been won or tied
     const checkStatus = () => {
         let currentLetter = "";
         let currentPlayer = "";
         let otherPlayer = "";
 
+        // Check which player is currently making a move & set variables accordingly
         if (playerOne.current) {
             currentLetter = 'x';
             currentPlayer = playerOne;
@@ -105,15 +102,16 @@ const displayController = (function() {
 
         const scoreBoard = document.querySelector('#score');
 
+        // Check whether game has been won or tied
         if (checkRow(currentLetter) || checkColumn(currentLetter) || checkDiagonal(currentLetter)) {
-            //trigger game win function w congrats message to current player
             scoreBoard.textContent = `${currentPlayer.name} wins!`;
+            play = false;
         } else if (turnNum == 9) {
             scoreBoard.textContent = "It's a tie!";
+            play = false;
         } else {
             currentPlayer.current = false;
             otherPlayer.current = true;
-            // do feature where player's name lights up to signify turn?
         }
     }; 
 
@@ -142,7 +140,7 @@ const displayController = (function() {
         }
     }; 
 
-    // When game is over, display winner and reset
+    // Start new game when button is clicked
     const startGame = (event) => {
 
         event.preventDefault();
@@ -151,27 +149,38 @@ const displayController = (function() {
         if (document.getElementById('nameOne').value == "" || document.getElementById('nameTwo').value == "") {
             alert("Please fill out every field.");
         } else {
-
-            // Create new book object based on info from form
+            // Set player names
             playerOne.name = `${document.getElementById('nameOne').value}`;
             playerOne.current = true;
             playerTwo.name = `${document.getElementById('nameTwo').value}`;
   
+            // Change display to show player names
             const firstName = document.querySelector('#firstPlayer');
             firstName.textContent = `${document.getElementById('nameOne').value}`;
 
             const secondName = document.querySelector('#secondPlayer');
             secondName.textContent = `${document.getElementById('nameTwo').value}`;
+
+            // Reset game board
+            for (let i = 0; i < 9; i++) {
+                thisArray[i] = undefined;
+                const thisBox = document.querySelector(`[data-number='${i}']`);
+                thisBox.textContent = "";
+            }
+
+            // Erase notice of previous winner
+            const scoreBoard = document.querySelector('#score');
+            scoreBoard.textContent = "";
+
+            // Set 'play' boolean to true & set turn # to 0
+            play = true;
+            turnNum = 0;
     
-            // Add new book to library array and create table
             hidePopup();
 
             // Reset form
             const form = document.getElementById("form");
             form.reset();
-
-            return [playerOne, playerTwo];
-
         }
     };
 
@@ -200,11 +209,6 @@ const displayController = (function() {
 gameBoard.createBoard();
 
 
-
-//const playerOne = Player('TestPlayer');
-//playerOne.current = true;
-
-//const playerTwo = Player('SecondPlayer');
 
 
 

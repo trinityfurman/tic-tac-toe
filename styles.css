@@ -3,21 +3,28 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
+    background-color:#FAF4E8;
+    font-family: 'Fira Sans', sans-serif;
 }
 
 .row {
-    height: 60px;
+    height: 70px;
     display: flex;
 }
 
 .box {
-    width: 60px;
+    width: 70px;
+    height: 70px;
     border: 1px solid black;
+    background-color:#FDD4DD;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .box:hover {
-    background-color: beige;
+    filter: brightness(0.90);
 }
 
 #board {
@@ -25,9 +32,45 @@ body {
     flex-direction: column;
 }
 
+
 #players {
     display: flex;
-    gap: 100px;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+}
+
+#playersBox {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+
+}
+
+#playersBox div {
+    background-color: #FFCEB4;
+    border-radius: 30px;
+    border: 1px solid #FFB790;
+    width: 200px;
+    text-align: center;
+    font-size: 18px;
+    padding: 8px;
+}
+
+#startButton {
+    border-radius: 10px;
+    border: 1px solid #fa97ab;
+    width: 150px;
+    font-size: 12px;
+    padding: 8px;
+    background-color: #FBA7B8;
+    font-family: 'Fira Sans', sans-serif;
+
+}
+
+#startButton:hover {
+    filter: brightness(0.90);
 }
 
 #modal {
@@ -42,11 +85,41 @@ body {
     background-color: rgba(0,0,0,0.4);
 }
 
-
 #formpopup {
     width: 250px;
     background-color: #EFD3CD;
     margin: 15% auto;
     padding: 10px;
     font-size: 14px;
+    font-family: 'Fira Sans', sans-serif;
+
+}
+
+#form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#formSubmit {
+    font-family: 'Fira Sans', sans-serif;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #FFCEB4;
+    border: 1px solid #f8be9e;
+}
+
+#formSubmit:hover {
+    filter: brightness(0.90);
+}
+
+#rightside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#score {
+    font-size: 22px;
+    color: #8AAA8B;
 }
